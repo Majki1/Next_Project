@@ -1,11 +1,74 @@
 import { useState } from 'react';
-import { Stepper, Button, Group, Input, TextInput, PasswordInput, Space, Select } from '@mantine/core';
+import { Stepper, Button, Group, Input, TextInput, PasswordInput, Space, Select, Notification, rem } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import '@mantine/dates/styles.css';
 import { dropdown } from '@nextui-org/react';
 import Link from 'next/link';
+import { date, set, z } from 'zod';
+import { fromZodError } from 'zod-validation-error';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+
+const UserSchema = z.object({
+    firstName: z.string().min(2),
+    lastName: z.string().min(2),
+    dateOfBirth: z.date(),
+    email: z.string().email(),
+    password: z.string().min(6),
+    confirmPassword: z.string().min(6),
+    city: z.string().min(2),
+    country: z.string().min(2),
+    accountType: z.string().min(2),
+});
 
 export default function RegisterForm() {
+    const checkIcon = <IconCheck style={{ width: rem(20), height: rem(20) }} />;
+    const IconError = <IconX style={{ width: rem(20), height: rem(20) }} />;
+    const [notification, setNotification] = useState(0);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        dateOfBirth: null,
+        email: '',
+        password: '',
+        confirmPassword: '',
+        city: '',
+        country: '',
+        accountType: '',
+    });
+
+    const validate = () => {
+      const result = UserSchema.safeParse(user);
+
+      if (!result.success) {
+        setNotification(2);
+        setErrorMessage(fromZodError(result.error).message);
+      } else if (user.password != user.confirmPassword) {
+        setNotification(3);
+        setTimeout(() => {
+          setNotification(0);
+        }, 3000);
+      } else {
+        setNotification(1);
+      }
+    }
+    const handleUserChange = (e:any) => {
+      setUser({
+        ...user,
+        [e.target.name]: e.target.value,
+      });
+      };
+
+      const handleDateChange = (value:any, name:any) => {
+        setUser({
+          ...user,
+          [name]: value,
+        });
+      }
+
     const [active, setActive] = useState(0);
     const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
     const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
@@ -14,25 +77,27 @@ export default function RegisterForm() {
         <>
       <Stepper active={active} onStepClick={setActive} className='text-white'>
         <Stepper.Step label="Step 1" description="Basic information">
-          <TextInput label="First name" placeholder="Enter your first name" required/>
+          <TextInput label="First Name" name='firstName' placeholder="Enter your first name" onChange={handleUserChange} required/>
           <Space h='sm'/>
-          <TextInput label="Last name" placeholder="Enter your last name" required/>
+          <TextInput label="Last Name" name='lastName' placeholder="Enter your last name" onChange={handleUserChange} required/>
           <Space h='sm'/>
-          <DateInput label="Date of birth" placeholder="Enter your date of birth" required/>  
+          <DateInput label="Date of birth" placeholder="Enter your date of birth" value={user.dateOfBirth} onChange={(value) => handleDateChange(value, 'dateOfBirth')} required/>  
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Account information">
-            <TextInput label="Email" placeholder="Enter your email" required/>
+            <TextInput label="Email" name='email' placeholder="Enter your email" value={user.email} onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <PasswordInput label="Password" placeholder="Enter your password" required/>
+            <PasswordInput label="Password" name='password' placeholder="Enter your password" onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <PasswordInput label="Confirm password" placeholder="Confirm your password" required/>
+            <PasswordInput label="ConfirmPassword" name='confirmPassword' onChange={handleUserChange} placeholder="Confirm your password" required/>
         </Stepper.Step>
         <Stepper.Step label="Final step" description="Preferences">
-            <TextInput label="City" placeholder="Enter your city" required/>
+            <TextInput label="City" name='city' placeholder="Enter your city" value={user.city} onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <TextInput label="Country" placeholder="Enter your country" required/>
+            <TextInput label="Country" name='country' placeholder="Enter your country" onChange={handleUserChange} required/>
             <Space h='sm'/>
             <Select
+            onChange={(value) => setUser({...user, accountType: value ? value : ''})}
+            name='accountType'
             classNames={{option: 'hover:text-black'}}
             label="Select your account type"
             placeholder="Pick the type"
@@ -43,20 +108,28 @@ export default function RegisterForm() {
             required
             />
         </Stepper.Step>
-        <Stepper.Completed>
-            <div>
-                <h1 className='text-4xl font-bold mb-4'>You are registered!</h1>
-                <p className='text-lg font-bold'>Thank you for registering</p>
-                <Space h='sm'/>
-            </div>
-            <Link href='/'> <Button variant='outline' color='cyan'>Go to Feed</Button></Link>
-        </Stepper.Completed>
       </Stepper>
 
       <Group justify="center" mt="xl">
         <Button variant="outline" color='white' onClick={prevStep}>Back</Button>
+        {active === 2 ? <Button variant='outline' color='cyan' onClick={validate}>Register</Button> :
         <Button variant='outline' color='cyan' onClick={nextStep}>Next step</Button>
+        }
       </Group>
+      {notification === 1 && (<Notification icon={checkIcon} color="teal" mt="md" className='top-5' withCloseButton={false}>
+        You have successfully registered!
+        <Link href='/'>
+          <Button className='text-white ml-[30%]'>Go to feed</Button>
+        </Link>
+      </Notification>)}
+      {notification === 2 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false} className='absolute mx-[25%]'>
+        {errorMessage}
+        <Space h='sm'/>
+        <Button onClick={() => setNotification(0)} color='red'>Dismiss</Button>
+      </Notification>)}
+      {notification === 3 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false}>
+        Passwords do not match.
+      </Notification>)}
     </>
     );
 }

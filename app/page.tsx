@@ -10,6 +10,7 @@ import { IconDroplet, IconFilter, IconGlassCocktail, IconHandClick, IconHandStop
 import clasess from './carousel.module.css';
 import MessageIcon from "./ui/messageIcon";
 import { useMediaQuery } from '@mantine/hooks';
+import Feed from "./ui/Feed";
 
 export default function Page() {
   const isSmallScreen = useMediaQuery('(max-width: 768px)');
@@ -53,16 +54,7 @@ export default function Page() {
       </Carousel>
     )}
             <Space h='xl'/>
-            <div className="h-auto grid lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2">
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-                <CardComponent />
-            </div>
+          <Feed />
         </div>
         </div>
         <MessageIcon />

@@ -34,7 +34,7 @@ export default function NavbarFront() {
             <div className="flex justify-between items-center border-b border-neutral-700 bg-neutral-900">
                 <div className="flex justify-between w-full items-center mt-2 ml-[7%] mr-[5%]">
                 <Link href='/'>
-                    <Title order={isSmallScreen ? 2 : 1} className='text-white ml-3 login-gradient'>ReserveMe</Title>
+                    <Title order={isSmallScreen ? 2 : 1} className="text-white ml-3 login-gradient font-['Payton_One']">ReserveMe</Title>
                 </Link>
                     {isSmallScreen ? (
                         <Dropdown className='bg-neutral-900' backdrop='blur'>

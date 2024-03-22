@@ -1,7 +1,13 @@
 import { Card, Image, Group, Text, Badge, Button, Space } from '@mantine/core';
 import { IconStar } from "@tabler/icons-react";
 
-export default function CompanyCard() {
+
+export default function CompanyCard({id}: {id: any}) {
+
+    const location = 'Nairobi, Kenya';
+    const description = 'We offer the best hair services in town.';
+    const time = '8:00 AM - 6:00 PM';
+    const phone = '+254 712 345 678';
 
         return (
                 <Card shadow="sm" padding="lg" radius="md" withBorder className='bg-neutral-900 ml-1'>
@@ -26,16 +32,16 @@ export default function CompanyCard() {
 
                 <Space h='md'/>
                         <Text size="xl" fw={700} td='underline'>Location</Text>
-                        <Text size="lg">Rijeka</Text>
+                        <Text size="lg">{location}</Text>
                         <Space h='md'/>
                         <Text size="xl" fw={700} td='underline'>Description</Text>
-                        <Text size="lg">We are a company that offers a variety of services. We are here to help you with your needs.</Text>
+                        <Text size="lg">{description}</Text>
                         <Space h='md'/>
                         <Text size="xl" fw={700} td='underline'>Work Hours</Text>
-                        <Text size="lg">Monday - Friday 8:00 - 16:00</Text>
+                        <Text size="lg">{id}</Text>
                         <Space h='md'/>
                         <Text size="xl" fw={700} td='underline'>Contact</Text>
-                        <Text size="lg">+385 91 123 4567</Text>
+                        <Text size="lg">{phone}</Text>
                 <Space h='md'/>
             </Card>
         );

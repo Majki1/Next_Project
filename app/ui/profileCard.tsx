@@ -2,8 +2,9 @@ import { Card, Image, Text, Badge, Button, Group, CardSection, Space } from '@ma
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 
-export default function CardComponent() {
+export default function CardComponent({companyName, description, href}: {companyName: string, description: string, href: string}) {
   const[isFollowing, setIsFollowing] = useState(false);
+
     return (
         <Card
           shadow="sm"
@@ -33,14 +34,15 @@ export default function CardComponent() {
           <Card.Section 
           className='text-start p-2'
           component="a"
-          href="/company">
+          href={href}>
           <Space h="md" />
           <Text fw={500} size="lg" mt="md">
-            Name of the company
+            {companyName}
           </Text>
 
           <Text mt="xs" c="dimmed" size="sm">
-            Click to view details and book an appointment!
+            {description}<br />
+            Click to view more and book an appointment.
           </Text>
           <Space h="xl" />
         </Card.Section>

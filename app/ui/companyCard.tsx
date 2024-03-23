@@ -1,5 +1,6 @@
 import { Card, Image, Group, Text, Badge, Button, Space } from '@mantine/core';
 import { IconStar } from "@tabler/icons-react";
+import Link from 'next/link';
 
 
 export default function CompanyCard({id}: {id: any}) {
@@ -20,7 +21,9 @@ export default function CompanyCard({id}: {id: any}) {
                 </Card.Section>
     
                 <Group justify="space-between" mt="md" mb="xs">
+                    <Link href='/profile'>
                     <Text size="xl" fw={700} td='underline'>Nives Hair</Text>
+                    </Link>
                     <Badge 
                     variant="gradient"
                     gradient={{ from: 'yellow', to: 'gold', deg: 90 }} 

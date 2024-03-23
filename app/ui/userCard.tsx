@@ -2,14 +2,16 @@
 import { Paper, Group, Image, Space, Text, Tabs, Button, Badge } from '@mantine/core';
 import { IconCheck, IconPencil, IconStar, IconStarFilled, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
+import ProfileTabs from './profileTabs';
 
 export default function UserCard() {
     const[isFollowing, setIsFollowing] = useState(false);
 
     return (
 
-        <div className="flex justify-left items-center w-auto">
-        <Paper shadow="xs" radius="md" className="w-full m-7 bg-neutral-900 border border-gray-500 min-h-screen">
+        <div className="flex justify-left items-start w-full min-h-screen">
+        <Paper shadow="xs" radius="md" className="w-full mx-7 mt-5 h-auto bg-neutral-900 border border-gray-500 max-h-screen">
+
             <div className='relative group'>
                 <Image
                     src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
@@ -22,14 +24,14 @@ export default function UserCard() {
                     >
                     <IconPencil size={24} className="text-white"/>
                 </Button>
-                </div>
                 <Image
                     src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
                     alt="User avatar"
-                    className="absolute left-8 m-2 border-2 bottom-[60%] border-neutral-900 rounded-full shadow-xs size-[125px]"
+                    className="absolute top-12 left-5 m-2 border-2 border-neutral-900 rounded-full shadow-xs size-[125px]"
                 />
+            </div>
             <div className="flex justify-between items-start">
-            <div className="w-1/3 border-r border-gray-500 min-h-screen">
+            <div className="w-1/3 ">
             <Group>
             <Text size='xl' className="text-start text-white ml-2 mt-[36px] font-bold">John Doe</Text>
             </Group>
@@ -59,32 +61,7 @@ export default function UserCard() {
             </Group>
             </div>
             <div className="w-2/3 flex justify-between items-center text-white">
-                <Tabs defaultValue='posts' className='w-full text-xl font-bold'>
-                    <Tabs.List grow justify="space-between">
-                        <Tabs.Tab value='location'>Location</Tabs.Tab>
-                        <Tabs.Tab value='posts'>Posts</Tabs.Tab>
-                        <Tabs.Tab value='news'>News</Tabs.Tab>
-                    </Tabs.List>
-
-                    <Tabs.Panel value='location'>
-                        <Group>
-                            <Text size='lg' className="text-start text-white">Location:</Text>
-                            <Text size='lg' className="text-start text-white">New York, NY</Text>
-                        </Group>
-                    </Tabs.Panel>
-                    <Tabs.Panel value='posts'>
-                        <Group>
-                            <Text size='lg' className="text-start text-white">Posts:</Text>
-                            <Text size='lg' className="text-start text-white">5</Text>
-                        </Group>
-                    </Tabs.Panel>
-                    <Tabs.Panel value='news'>
-                        <Group>
-                            <Text size='lg' className="text-start text-white">News:</Text>
-                            <Text size='lg' className="text-start text-white">0</Text>
-                        </Group>
-                    </Tabs.Panel>
-                </Tabs>
+                <ProfileTabs />
             </div>
             </div>
         </Paper>

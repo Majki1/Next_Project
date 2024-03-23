@@ -23,6 +23,7 @@ export default function Feed() {
           companyName={data.companyName} 
           description={data.description} 
           href={`/company/${index}?id=${index}`} 
+          id={index}
         />
       ))}
     </div>

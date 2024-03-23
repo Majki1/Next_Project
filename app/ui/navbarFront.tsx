@@ -59,7 +59,7 @@ export default function NavbarFront() {
                                 </DropdownItem>
                                 <DropdownItem>
                                     <div className='flex items-center gap-1'>
-                                        <Link key='Profile' href='/profile' className='text-medium'><p>Profile</p></Link> 
+                                        <Link key='UserProfile' href='/userProfile' className='text-medium'><p>Profile</p></Link> 
                                     </div>
                                 </DropdownItem>
                                 <DropdownItem>
@@ -105,7 +105,7 @@ export default function NavbarFront() {
                             <DropdownItem>
                                 <div className='flex items-center gap-1'>
                                 <IconEdit />
-                                <Link key='Profile' href='/profile' className='text-medium'><p>Profile</p></Link> 
+                                <Link key='UserProfile' href='/userProfile' className='text-medium'><p>Profile</p></Link> 
                                 </div>
                             </DropdownItem>
                             <DropdownItem>

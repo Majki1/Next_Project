@@ -11,15 +11,34 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 
 const UserSchema = z.object({
-    firstName: z.string().min(2),
-    lastName: z.string().min(2),
-    dateOfBirth: z.date(),
-    email: z.string().email(),
-    password: z.string().min(6),
-    confirmPassword: z.string().min(6),
-    city: z.string().min(2),
-    country: z.string().min(2),
-    accountType: z.string().min(2),
+    firstName: z.string({
+        invalid_type_error: 'First name must be at least 2 characters long',
+    }).min(2, "First name must be at least 2 characters long"),
+    lastName: z.string({
+        invalid_type_error: 'Last name must be at least 2 characters long',
+    }).min(2, "Last name must be at least 2 characters long"),
+    dateOfBirth: z.date({
+        invalid_type_error: 'Date of birth must be a valid date',
+    }),
+    email: z.string({
+        invalid_type_error: 'Email must be a valid email address',
+    }).email({
+        message: 'Email must be a valid email address',
+    }),
+    password: z.string({
+        invalid_type_error: 'Password must be at least 6 characters long',
+    }).min(6),
+    confirmPassword: z.string({
+    }).min(6),
+    city: z.string({
+        invalid_type_error: 'City must be at least 2 characters long',
+    }).min(2),
+    country: z.string({
+        invalid_type_error: 'Country must be at least 2 characters long',
+    }).min(2),
+    accountType: z.string({
+        invalid_type_error: 'Please select your account type',
+    }).min(2),
 });
 
 export default function RegisterForm() {
@@ -45,7 +64,7 @@ export default function RegisterForm() {
 
       if (!result.success) {
         setNotification(2);
-        setErrorMessage(fromZodError(result.error).message);
+        setErrorMessage(result.error.errors[0].message);
       } else if (user.password != user.confirmPassword) {
         setNotification(3);
         setTimeout(() => {
@@ -53,6 +72,17 @@ export default function RegisterForm() {
         }, 3000);
       } else {
         setNotification(1);
+        setUser({
+          firstName: '',
+          lastName: '',
+          dateOfBirth: null,
+          email: '',
+          password: '',
+          confirmPassword: '',
+          city: '',
+          country: '',
+          accountType: '',
+        });
       }
     }
     const handleUserChange = (e:any) => {
@@ -77,27 +107,28 @@ export default function RegisterForm() {
         <>
       <Stepper active={active} onStepClick={setActive} className='text-white'>
         <Stepper.Step label="Step 1" description="Basic information">
-          <TextInput label="First Name" name='firstName' placeholder="Enter your first name" onChange={handleUserChange} required/>
+          <TextInput label="First Name" name='firstName' placeholder="Enter your first name" value={user.firstName} onChange={handleUserChange} required/>
           <Space h='sm'/>
-          <TextInput label="Last Name" name='lastName' placeholder="Enter your last name" onChange={handleUserChange} required/>
+          <TextInput label="Last Name" name='lastName' placeholder="Enter your last name" value={user.lastName} onChange={handleUserChange} required/>
           <Space h='sm'/>
           <DateInput label="Date of birth" placeholder="Enter your date of birth" value={user.dateOfBirth} onChange={(value) => handleDateChange(value, 'dateOfBirth')} required/>  
         </Stepper.Step>
         <Stepper.Step label="Step 2" description="Account information">
             <TextInput label="Email" name='email' placeholder="Enter your email" value={user.email} onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <PasswordInput label="Password" name='password' placeholder="Enter your password" onChange={handleUserChange} required/>
+            <PasswordInput label="Password" name='password' placeholder="Enter your password" value={user.password} description="Password must be at least 6 characters long" onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <PasswordInput label="ConfirmPassword" name='confirmPassword' onChange={handleUserChange} placeholder="Confirm your password" required/>
+            <PasswordInput label="ConfirmPassword" name='confirmPassword' value={user.confirmPassword} onChange={handleUserChange} placeholder="Confirm your password" required/>
         </Stepper.Step>
         <Stepper.Step label="Final step" description="Preferences">
             <TextInput label="City" name='city' placeholder="Enter your city" value={user.city} onChange={handleUserChange} required/>
             <Space h='sm'/>
-            <TextInput label="Country" name='country' placeholder="Enter your country" onChange={handleUserChange} required/>
+            <TextInput label="Country" name='country' placeholder="Enter your country" value={user.country} onChange={handleUserChange} required/>
             <Space h='sm'/>
             <Select
             onChange={(value) => setUser({...user, accountType: value ? value : ''})}
             name='accountType'
+            value={user.accountType}
             classNames={{option: 'hover:text-black'}}
             label="Select your account type"
             placeholder="Pick the type"
@@ -122,7 +153,7 @@ export default function RegisterForm() {
           <Button className='text-white ml-[30%]'>Go to feed</Button>
         </Link>
       </Notification>)}
-      {notification === 2 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false} className='absolute mx-[25%]'>
+      {notification === 2 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false} className='absolute'>
         {errorMessage}
         <Space h='sm'/>
         <Button onClick={() => setNotification(0)} color='red'>Dismiss</Button>

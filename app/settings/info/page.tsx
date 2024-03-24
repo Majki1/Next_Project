@@ -11,15 +11,7 @@ const Settings = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const activeTab = searchParams.get('activeTab');
-    const items = [
-        { title: 'Home', href: '/'},
-        { title: 'Settings', href: '/settings'},
-        { title: 'Account Info', href: '/settings/info' },
-    ].map((item, index) => (
-        <Anchor href={item.href} key={index}>
-          {item.title}
-        </Anchor>
-      ));
+
   const form = useForm({
     initialValues: {
       username: 'Jane Doe',
@@ -37,11 +29,6 @@ const Settings = () => {
   return (
 <>
   <Navbar />
-    <div className='mt-6 ml-[10%]'>
-        <Breadcrumbs separator="→" separatorMargin="sm" mt="xs">
-            {items}
-        </Breadcrumbs>
-    </div>
   <div className='h-screen flex justify-center items-center w-full'>
     <div className='flex justify-center mt-[-25%] ml-[-30%] w-full'>
       <Tabs orientation="vertical" classNames={{tab: 'text-large hover:bg-neutral-800 hover:text-cyan-500', panel: 'w-full', root: 'ml-[20%] w-[70%]'}} value='info'

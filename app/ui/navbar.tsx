@@ -10,7 +10,7 @@ import {
     DropdownItem
 } from "@nextui-org/react";
 import Link from 'next/link';
-import { IconMan, IconSettings, IconEdit, IconDoorExit } from '@tabler/icons-react';
+import { IconSettings, IconEdit, IconDoorExit, IconUser } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useMediaQuery } from '@mantine/hooks';
 
@@ -109,7 +109,7 @@ export default function NavbarFront() {
                                     </DropdownItem>
                                     <DropdownItem>
                                         <div className='flex items-center gap-1'>
-                                            <IconMan />
+                                            <IconUser />
                                             <Link key='Account preferences' href='/prefs' className='text-medium'><p>Account Preferences</p></Link>
                                         </div>
                                     </DropdownItem>

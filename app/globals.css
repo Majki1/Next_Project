@@ -29,6 +29,7 @@ body {
 .button-gradient:hover {
   background: linear-gradient(18deg, rgb(44, 120, 244), cyan);
   color: white;
+  border: none;
 }
 
 .login-gradient {

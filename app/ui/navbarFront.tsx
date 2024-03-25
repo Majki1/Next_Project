@@ -11,7 +11,7 @@ import {
   } from "@nextui-org/react";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { IconMan, IconSettings, IconEdit, IconDoorExit } from '@tabler/icons-react';
+import { IconUser, IconSettings, IconEdit, IconDoorExit } from '@tabler/icons-react';
 import { useMediaQuery } from '@mantine/hooks';
 
 export default function NavbarFront() {
@@ -83,7 +83,7 @@ export default function NavbarFront() {
             <>
             <div className='flex flex-col lg:mr-[150px]'>
                 <div className="flex justify-between w-80 mt-2 mr-[10.2%]">
-                    <Button variant='filled' color='white' className="button-gradient py-5px" radius='xl'>Following</Button>
+                    <Button variant='' color='white' className="button-gradient py-5px" radius='xl'>Following</Button>
                     <Button variant='' color='white' className="button-gradient" radius='xl'>Feed</Button>
                     <Button variant='' color='white' className="button-gradient py-5px" radius='xl'>Posts</Button>
                 </div>
@@ -116,7 +116,7 @@ export default function NavbarFront() {
                             </DropdownItem>
                             <DropdownItem>
                                 <div className='flex items-center gap-1'>
-                                <IconMan />
+                                <IconUser />
                                 <Link key='Account preferences' href='/prefs' className='text-medium'><p>Account Preferences</p></Link>
                                 </div>
                             </DropdownItem>

@@ -10,7 +10,7 @@ export default function Page() {
         <>
         <div className="flex items-center justify-center h-screen bg-gradient-to-r from-neutral-600 to-black">
             {register ? (
-                <div className='max-w-[30%]'>
+                <div className='max-w-[40%]'>
                     <RegisterForm />
                 </div>
             ) : (

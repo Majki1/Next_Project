@@ -133,6 +133,7 @@ export default function RegisterForm() {
             label="Select your account type"
             placeholder="Pick the type"
             data={['Customer', 'Employee', 'CEO']}
+            description={`Select your account type, this cannot be changed later.`}
             clearable
             allowDeselect
             comboboxProps={{ transitionProps: { transition: 'pop', duration: 200 } }}
@@ -150,13 +151,13 @@ export default function RegisterForm() {
       {notification === 1 && (<Notification icon={checkIcon} color="teal" mt="md" className='top-5' withCloseButton={false}>
         You have successfully registered!
         <Link href='/'>
-          <Button className='text-white ml-[30%]'>Go to feed</Button>
+          <Button className='text-white ml-[30%]' variant='filled'>Go to feed</Button>
         </Link>
       </Notification>)}
       {notification === 2 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false} className='absolute'>
         {errorMessage}
         <Space h='sm'/>
-        <Button onClick={() => setNotification(0)} color='red'>Dismiss</Button>
+        <Button onClick={() => setNotification(0)} color='red' variant='filled' className='bg-red-500'>Dismiss</Button>
       </Notification>)}
       {notification === 3 && (<Notification icon={IconError} color="red" title="Error!" mt="md" withCloseButton={false}>
         Passwords do not match.
